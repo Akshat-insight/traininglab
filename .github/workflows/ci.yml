@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_ENV: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Say hello
+        run: echo "CI running on PR"
+
+      - name: Use secret
+        env:
+          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+        run: 'echo "Secret is set: ${MY_API_KEY:+yes}"'
+
+      - name: Show job-level variable
+        run: echo "Environment is $BUILD_ENV"
+
+      - name: Create build file
+        run: echo "build output" > build-output.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build-output.txt
