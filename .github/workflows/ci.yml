@@ -20,7 +20,7 @@ jobs:
       - name: Use secret
         env:
           MY_API_KEY: ${{ secrets.MY_API_KEY }}
-        run: echo "Secret is set: ${MY_API_KEY:+yes}"
+        run: 'echo "Secret is set: ${MY_API_KEY:+yes}"'
 
       - name: Show job-level variable
         run: echo "Environment is $BUILD_ENV"
